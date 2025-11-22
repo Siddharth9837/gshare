@@ -5,10 +5,15 @@ import Header from './components/Header';
 import NoteCard from './components/NoteCard';
 import SellNotesForm from './components/SellNotesForm';
 import Footer from './components/Footer';
+import LoginPage from './components/LoginPage';
 
 const App: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSellFormOpen, setIsSellFormOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  const handleLogin = useCallback(() => setIsLoggedIn(true), []);
+  const handleLogout = useCallback(() => setIsLoggedIn(false), []);
 
   const openSellForm = useCallback(() => setIsSellFormOpen(true), []);
   const closeSellForm = useCallback(() => setIsSellFormOpen(false), []);
@@ -22,9 +27,13 @@ const App: React.FC = () => {
     );
   }, [searchTerm]);
 
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col font-sans text-slate-800">
-      <Header onSellClick={openSellForm} />
+      <Header onSellClick={openSellForm} isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       
       <main className="flex-grow">
         {/* Hero Section */}

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 interface HeaderProps {
   onSellClick: () => void;
+  isLoggedIn: boolean;
+  onLogout: () => void;
 }
 
 const BookIcon: React.FC<{className?: string}> = ({className}) => (
@@ -10,7 +12,7 @@ const BookIcon: React.FC<{className?: string}> = ({className}) => (
     </svg>
 );
 
-const Header: React.FC<HeaderProps> = ({ onSellClick }) => {
+const Header: React.FC<HeaderProps> = ({ onSellClick, isLoggedIn, onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -29,9 +31,18 @@ const Header: React.FC<HeaderProps> = ({ onSellClick }) => {
             </nav>
           </div>
           <div className="hidden md:flex items-center space-x-4">
-            <button className="font-medium text-gray-500 hover:text-gray-900 transition-colors">
-              Log in
-            </button>
+            {isLoggedIn ? (
+                 <button 
+                    onClick={onLogout}
+                    className="font-medium text-gray-500 hover:text-gray-900 transition-colors"
+                >
+                    Log out
+                </button>
+            ) : (
+                <button className="font-medium text-gray-500 hover:text-gray-900 transition-colors">
+                  Log in
+                </button>
+            )}
             <button
               onClick={onSellClick}
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-brand-primary hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
@@ -65,6 +76,18 @@ const Header: React.FC<HeaderProps> = ({ onSellClick }) => {
             <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">How it Works</a>
             <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Pricing</a>
             <button onClick={onSellClick} className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-brand-primary hover:text-indigo-700 hover:bg-indigo-50">Sell Notes</button>
+            {isLoggedIn ? (
+                 <button 
+                    onClick={() => { onLogout(); setIsMenuOpen(false); }}
+                    className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                >
+                    Log out
+                </button>
+            ) : (
+                <button className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                    Log in
+                </button>
+            )}
           </div>
         </div>
       )}
