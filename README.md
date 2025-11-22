@@ -7,7 +7,7 @@ This project focuses on clean UI, quick access, and smooth sharing—making it p
 ---
 
 ### ✨ Features
-- Create, edit, and delete notes
+- share the notes and colloboratons among university friends.
 - Share notes using public links
 - Invite collaborators with view/edit access
 - Organize notes using tags or folders
